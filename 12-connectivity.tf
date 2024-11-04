@@ -42,7 +42,7 @@ resource "azurerm_subnet" "iaas_subnet" {
   resource_group_name                            = var.resource_group_name
   virtual_network_name                           = azurerm_virtual_network.virtual_network.name
   service_endpoints                              = var.subnet_service_endpoints
-  enforce_private_link_endpoint_network_policies = var.iaas_subnet_enforce_private_link_endpoint_network_policies
+  private_endpoint_network_policies              = var.iaas_subnet_enforce_private_link_endpoint_network_policies
 }
 
 ## Application Gateway
@@ -111,7 +111,7 @@ resource "azurerm_subnet" "additional_subnets" {
   address_prefixes                               = [each.value.address_prefix]
   resource_group_name                            = var.resource_group_name
   virtual_network_name                           = azurerm_virtual_network.virtual_network.name
-  enforce_private_link_endpoint_network_policies = true
+  private_endpoint_network_policies              = "Enabled"
 }
 
 # Route Table
