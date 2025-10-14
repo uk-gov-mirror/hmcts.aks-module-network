@@ -26,11 +26,16 @@ variable "additional_routes" {
 }
 
 variable "additional_subnets" {
+  description = "Map of additional subnets to create, keyed by the subnet name."
   type = list(object({
-    name           = string
-    address_prefix = string
+    name              = string
+    address_prefix    = string
+    service_endpoints = optional(list(string))
+    delegations = optional(map(object({
+      service_name = string,
+      actions      = list(string)
+    })))
   }))
-
   default = []
 }
 
