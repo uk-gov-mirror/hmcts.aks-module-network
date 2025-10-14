@@ -112,6 +112,17 @@ resource "azurerm_subnet" "additional_subnets" {
   resource_group_name                            = var.resource_group_name
   virtual_network_name                           = azurerm_virtual_network.virtual_network.name
   enforce_private_link_endpoint_network_policies = true
+
+  dynamic "delegation" {
+    for_each = each.value.delegations != null ? each.value.delegations : {}
+    content {
+      name = delegation.key
+      service_delegation {
+        name    = delegation.value.service_name
+        actions = delegation.value.actions
+      }
+    }
+  }
 }
 
 # Route Table
