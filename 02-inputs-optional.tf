@@ -35,7 +35,7 @@ variable "additional_subnets" {
       service_name = string,
       actions      = list(string)
     })))
-    private_endpoint_network_policies = optional(string, "Enabled")
+    private_endpoint_network_policies = optional(string, "Disabled")
   }))
   default = []
 }

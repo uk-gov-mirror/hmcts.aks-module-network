@@ -13,9 +13,10 @@ resource "azurerm_subnet" "aks_00_subnet" {
     var.service_shortname
   )
 
-  resource_group_name  = var.resource_group_name
-  virtual_network_name = azurerm_virtual_network.virtual_network.name
-  service_endpoints    = var.subnet_service_endpoints
+  resource_group_name               = var.resource_group_name
+  virtual_network_name              = azurerm_virtual_network.virtual_network.name
+  service_endpoints                 = var.subnet_service_endpoints
+  private_endpoint_network_policies = "Enabled"
 }
 
 ## AKS-01
@@ -27,9 +28,10 @@ resource "azurerm_subnet" "aks_01_subnet" {
     var.service_shortname
   )
 
-  resource_group_name  = var.resource_group_name
-  virtual_network_name = azurerm_virtual_network.virtual_network.name
-  service_endpoints    = var.subnet_service_endpoints
+  resource_group_name               = var.resource_group_name
+  virtual_network_name              = azurerm_virtual_network.virtual_network.name
+  service_endpoints                 = var.subnet_service_endpoints
+  private_endpoint_network_policies = "Enabled"
 }
 
 ## Iaas
@@ -54,8 +56,9 @@ resource "azurerm_subnet" "application_gateway_subnet" {
     var.service_shortname
   )
 
-  resource_group_name  = var.resource_group_name
-  virtual_network_name = azurerm_virtual_network.virtual_network.name
+  resource_group_name               = var.resource_group_name
+  virtual_network_name              = azurerm_virtual_network.virtual_network.name
+  private_endpoint_network_policies = "Enabled"
 }
 
 # Postgres
@@ -77,7 +80,8 @@ resource "azurerm_subnet" "postgresql_subnet" {
     }
   }
 
-  service_endpoints = var.subnet_service_endpoints
+  service_endpoints                 = var.subnet_service_endpoints
+  private_endpoint_network_policies = "Enabled"
 }
 
 # Postgres Expanded subnet
@@ -99,7 +103,8 @@ resource "azurerm_subnet" "postgresql_expanded_subnet" {
     }
   }
 
-  service_endpoints = var.subnet_service_endpoints
+  service_endpoints                 = var.subnet_service_endpoints
+  private_endpoint_network_policies = "Enabled"
 }
 
 ## Additional Subnets
