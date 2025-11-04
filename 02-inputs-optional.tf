@@ -52,7 +52,7 @@ variable "additional_routes_application_gateway" {
 }
 
 variable "iaas_subnet_enforce_private_link_endpoint_network_policies" {
-  default = "Enabled"
+  default = "Disabled"
   type    = string
 
   validation {
