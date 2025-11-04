@@ -39,10 +39,10 @@ resource "azurerm_subnet" "iaas_subnet" {
 
   name = "iaas"
 
-  resource_group_name                            = var.resource_group_name
-  virtual_network_name                           = azurerm_virtual_network.virtual_network.name
-  service_endpoints                              = var.subnet_service_endpoints
-  enforce_private_link_endpoint_network_policies = var.iaas_subnet_enforce_private_link_endpoint_network_policies
+  resource_group_name               = var.resource_group_name
+  virtual_network_name              = azurerm_virtual_network.virtual_network.name
+  service_endpoints                 = var.subnet_service_endpoints
+  private_endpoint_network_policies = var.iaas_subnet_enforce_private_link_endpoint_network_policies
 }
 
 ## Application Gateway
@@ -107,12 +107,12 @@ resource "azurerm_subnet" "postgresql_expanded_subnet" {
 resource "azurerm_subnet" "additional_subnets" {
   for_each = { for subnet in var.additional_subnets : subnet.name => subnet }
 
-  name                                           = each.value.name
-  address_prefixes                               = [each.value.address_prefix]
-  resource_group_name                            = var.resource_group_name
-  virtual_network_name                           = azurerm_virtual_network.virtual_network.name
-  enforce_private_link_endpoint_network_policies = true
-  service_endpoints                              = each.value.service_endpoints
+  name                              = each.value.name
+  address_prefixes                  = [each.value.address_prefix]
+  resource_group_name               = var.resource_group_name
+  virtual_network_name              = azurerm_virtual_network.virtual_network.name
+  private_endpoint_network_policies = each.value.private_endpoint_network_policies
+  service_endpoints                 = each.value.service_endpoints
 
   dynamic "delegation" {
     for_each = each.value.delegations != null ? each.value.delegations : {}

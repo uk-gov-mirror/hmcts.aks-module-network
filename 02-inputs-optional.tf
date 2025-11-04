@@ -35,6 +35,7 @@ variable "additional_subnets" {
       service_name = string,
       actions      = list(string)
     })))
+    private_endpoint_network_policies = optional(string, "Enabled")
   }))
   default = []
 }
@@ -48,4 +49,14 @@ variable "additional_routes_application_gateway" {
   }))
 
   default = []
+}
+
+variable "iaas_subnet_enforce_private_link_endpoint_network_policies" {
+  default = "Enabled"
+  type    = string
+
+  validation {
+    condition     = contains(["Disabled", "Enabled", "NetworkSecurityGroupEnabled", "RouteTableEnabled"], var.iaas_subnet_enforce_private_link_endpoint_network_policies)
+    error_message = "The iaas_subnet_enforce_private_link_endpoint_network_policies must be one of: Disabled, Enabled, NetworkSecurityGroupEnabled, or RouteTableEnabled."
+  }
 }
